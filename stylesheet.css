@@ -1,0 +1,112 @@
+body {
+  background: #5A4836;
+  color: #000000;
+  margin: 0px;
+    background-image: url('images/bkg_brown_left.gif');
+    background-repeat: repeat-y;
+	background-position: left;
+}
+td.main {
+  color: #000000;
+  margin: 0px;
+    background-image: url('images/bkg_brown_right.gif');
+    background-repeat: repeat-y;
+	background-position: right;
+}
+td.top {
+  color: #000000;
+  margin: 0px;
+    background-image: url('images/bkg_sunset.gif');
+    background-repeat: repeat-x;
+	background-position: top;
+}
+td.mainleft {
+  color: #000000;
+  margin: 0px;
+    background-image: url('images/bkg_beige_left.gif');
+    background-repeat: repeat-y;
+	background-position: right;
+}
+td.mainright {
+  color: #000000;
+  margin: 0px;
+    background-image: url('images/bkg_beige_right.gif');
+    background-repeat: repeat-y;
+	background-position: left;
+}
+td.maincenter {
+  background: #E8CEAD;
+  color: #000000;
+}
+a, a:visited {
+  color: #A95239;
+  text-decoration: none;
+}
+
+a:hover, a:active {
+  color: #D76528;
+  text-decoration: underline;
+}
+td, P {
+  font-family: Verdana, Arial, sans-serif;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #000000;
+}
+td.navleft {
+  color: #000000;
+  margin: 0px;
+    background-image: url('images/bkg_brown_right.gif');
+    background-repeat: repeat-y;
+	background-position: right;
+}
+td.navright {
+  color: #000000;
+  margin: 0px;
+    background-image: url('images/bkg_brown_left.gif');
+    background-repeat: repeat-y;
+	background-position: left;
+}
+td.navcenter {
+  background: #413427;
+  color: #EDBB54;
+}
+
+a.nav,a.nav:visited {
+  color: #D76528; }
+
+a.nav:hover,a.nav:active {
+  color: #D97A2F; }
+
+
+.small {
+  font-size: 9px;
+}
+h1 {
+  font-size: 24px;
+}
+h2 {
+  font-size: 21px;
+}
+.notice {
+  background: #cccccc;
+  border: 2px solid #000000;
+  padding: 12px 24px 8px 24px;
+  margin: 4px;
+  color: #000000;
+  font-family: Verdana, Arial, sans-serif;
+  font-size: 11px;
+}
+.noticetitle {
+  font-family: Verdana, Arial, sans-serif;
+  font-size: 12px;
+  text-decoration: underline;
+}
+.linktopf {
+  color: #A95239;
+  text-decoration: none;
+}
+.linktopf:hover, .linktopf:active {
+  color: #D76528;
+  text-decoration: underline;
+}

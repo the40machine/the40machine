@@ -1,0 +1,706 @@
+<!DOCTYPE HTML> 
+<html>
+<!--  NOTE: search for line below that assigns var cal = to choose
+      rendering of fall vs. spring calendar --> 
+<head>
+  <meta charset="utf-8"> 
+  <title>Tufts: Comp 40 Calendar</title>
+  <link rel = "stylesheet" type = "text/css" href = "./course.css">
+  <link rel="stylesheet" type="text/css" href="calendar.css">
+   <style type = "text/css">
+     .tentative
+     {
+	  font-style: italic;
+	  color:      gray;
+     }
+
+     .solutions
+     {
+	  font-style: italic;
+	  color:      #5555FF;
+     }
+
+     .HW
+     {
+	  color:      green;
+     }
+     .HW:visited
+     { 
+          color:      darkgreen;
+     }
+
+     table.calendar a.due:visited
+     {
+	  color:     maroon;
+     }
+
+     table.calendar th
+     {
+          background-color: #E0E0E0;
+     }
+   </style>
+
+   <!-- Javascript for visibility toggles -->
+   <script type = "text/javascript" src = "course.js">
+   </script>
+
+   <!-- Javascript for building calendar -->
+   <script type = "text/javascript" src = "calendar_obj_1.4.js">
+   </script>
+
+   <!-- Javascript for getting school calendar dates -->
+   <script type = "text/javascript" 
+	   src  = "tufts-2016-2017-academic-calendar.js">
+   </script>
+   <script type = "text/javascript">
+
+     function span_class(text, classname)
+     {
+          return "<span class = '" + classname + "'>"
+                 + text
+                 + "</span>";
+     }
+
+     var cal = spring_calendar;  /* includes holidays, but not
+                                    administrative dates */
+     var c = cal;              
+     c.set_calendar_class("calendar");
+     c.set_today_class("today");
+     c.set_label_format("ddmmm");
+
+     c.set_weekdays("LEC", ["Mon", "Wed"]);
+     c.set_weekdays("LAB", ["Fri"]);
+
+
+     var blank_line = ""; /* adding empty item makes a blank line in calendar */
+     var nodate = "";     /* something to use for unassigned lectures, etc.   */
+			  /* can give it a real date to make them all appear */
+
+     var NOAH_NOT_YET = true;
+
+
+
+     /***********************************************************************/
+     /*                          Lectures                                   */
+     /***********************************************************************/
+
+
+     /* 
+      * Not wild about the absolute URI here, but I want to ensure 
+      * that student land there securely, because they will undergo
+      * LDAP authentication there.
+      */
+     c.add_info("19Jan", fakeLink("Prelab 0",
+                                  "https://www.cs.tufts.edu/comp/40/"
+                                  + "labs/under-the-c++-prelab/index"),
+                           blank_line,
+                           fakeLink("New student survey",
+                                    "https://www.cs.tufts.edu/comp/40/"
+                                    + "surveys/student_info"),
+                           fakeLink("Piazza sign-up",
+                                    "http://piazza.com/tufts/spring2017/comp40",
+                                    "due"));
+
+     introDay = c.add_info("23Jan", // fakeLink("Welcome (pptx)",
+                                    //"lec_notes/00_welcome/WelcometoCOMP40.pptx"),
+                           fakeLink("Welcome (pdf)", 
+                                    "lec_notes/00_welcome/WelcometoCOMP40.pdf"),
+                           // fakeLink("Quick look at C (pptx)", 
+                           //          "lec_notes/00_welcome/CvsC++.pptx"),
+                           fakeLink("Quick look at C (pdf)", 
+                                    "lec_notes/00_welcome/CvsC++.pdf"),
+                           blank_line,
+                           // fakeLink("Welcome notes from prior terms", 
+                           //          "lec_notes/00_welcome/"),
+		        
+                           blank_line,
+		           "Required reading for next time:",
+                           fakeLink("COMP 40 Admin &amp; Policies","admin"),
+                           fakeLink("Pair Programming Code of Conduct","http://www.cs.tufts.edu/comp/40/code-of-conduct"),
+                           blank_line,
+                           "Hanson: Ch. 1 &amp; 2, pp. 45&ndash;52, "
+                           + "33&ndash;34, 103&ndash;107, 115&ndash;118 "
+                           + "(119&ndash;125 recommended), 137&ndash;140, "
+                           + "161&ndash;164, 171&ndash;173.",
+                           blank_line,
+                           "K&amp;R pp. 114&ndash;115 (<code>argc</code>, "
+                           + "<code>argv</code>), 162 (<code>cat</code>), "
+                           + "164&ndash;165 (<code>fgets()</code>), "
+                           + "153&ndash;155 (<code>printf()</code>)",
+                           blank_line,
+                           fakeLink("Compile Scripts and Makefiles",
+                                    "readings/compile-scripts"),
+                           blank_line,
+                           fakeLink("Williams &amp; Kessler (on pair programming)", 
+                                    "readings/pairs.pdf"),
+                           fakeLink("How to Analyze a Programming Problem",
+                                    "handouts/howto-analyze"));
+
+     secondDay = c.add_info(c.next_LEC(),
+                           fakeLink("More on COMP 40",
+                                   "lec_notes/01_getting_started/"),
+                           blank_line,
+                           // fakeLink("Abstraction, Modularity, Interfaces and Pointers (pptx)", 
+                           //          "lec_notes/01_getting_started/InterfaceAbstractionPointer.pptx"),
+                           fakeLink("Abstraction, Modularity, Interfaces and Pointers (pdf)", 
+                                    "lec_notes/01_getting_started/InterfaceAbstractionPointer.pdf"),
+                           blank_line,
+                           fakeLink("Invariants",
+                                    "lec_notes/01_invariants/")
+);
+
+		           c.add_info(secondDay, "To prepare for FRIDAY's lab:",
+                           fakeLink("Pair Programming in COMP 40","admin#pairprogramming"),
+                           fakeLink("Pair Programming Code of Conduct","code-of-conduct")
+                           // fakeLink("Skim C intro",
+                           //          "reference/c-intro/c-intro"),
+                           // fakeLink("Review about Makefiles",
+                           //         "readings/compile-scripts"));
+                           );
+     c.add_info(c.next_LEC(), 
+                           // fakeLink("More on Abstract Data Types (pptx)", 
+                           //          "lec_notes/01_getting_started/MoreOnAbstractTypes.pptx"),
+                           fakeLink("More on Abstract Data Types (pdf)", 
+                                    "lec_notes/01_getting_started/MoreOnAbstractTypes.pdf"),
+                           blank_line,
+                           fakeLink("Invariants",
+                                    "lec_notes/01_invariants/"),
+                           fakeLink("Hanson's Table Interface",
+                                   "lec_notes/01_getting_started/table"),
+                           fakeLink("Void and Function Pointers",
+                                    "lec_notes/02_void_function_pointers/"),
+                           fakeLink("function_pointers.c",
+                                    "lec_notes/02_void_function_pointers/"
+                                    + "function_pointers.c", "code"),
+                           blank_line,
+                           "Read",
+                           fakeLink("How to read C declarations",
+                                    "readings/canning-et-al-2004.pdf"),
+                           fakeLink("Computational Thinking (enrichment)",
+                                    "readings/compthink.pdf"));
+     c.add_info(c.next_LEC(), 
+                           fakeLink("More on Abstract Data Types (pdf)", 
+                                    "lec_notes/01_getting_started/"
+                                    + "MoreOnAbstractTypes.pdf#page=42"),
+                           fakeLink("list_map.c",
+                                    "lec_notes/02_void_function_pointers/"
+                                    + "list_map.c.pdf", "code"),
+                           fakeLink("UArray",
+                                    "uarray.html"),
+
+                           // fakeLink("What is a Bit? (pptx)", 
+                           //          "lec_notes/03_bits/Bits.pptx"),
+                           // fakeLink("What is a Bit? (pdf)", 
+                           //          "lec_notes/03_bits/Bits.pdf"),
+                           blank_line,
+                           "Read: (to help with HW2)",
+                           fakeLink("Design documents", "handouts/design.pdf"),
+                           fakeLink("HOP in C",
+                                    "handouts/fpvoid.pdf"));
+     c.add_info(c.next_LEC(), 
+                           fakeLink("What is a Bit? (pdf)", 
+                                    "lec_notes/03_bits/Bits.pdf"),
+                           fakeLink("Technique",   
+                                    "lec_notes/01_technique/"),
+                           blank_line,
+                           fakeLink("Notes on UArray",   
+                                    "lec_notes/03_uarray_precis/"),
+                           blank_line,
+                           // fakeLink("Compiling C Programs (pptx)", 
+                           //          "lec_notes/05_compiling_c/Compiling C.pptx"),
+                           fakeLink("Compiling C Programs (pdf)", 
+                                    "lec_notes/05_compiling_c/Compiling C.pdf"),
+                           fakeLink("Compiling, linking, libraries", 
+                                    "lec_notes/05_compiling_c/index"),
+                           blank_line,
+                           fakeLink("Notes on naming",
+                                    "lec_notes/04_naming_notes"),
+                           blank_line,
+                            "Read for this lecture:",
+                            "Bryant and O'Hallaron: Ch 1 through section 1.3"
+                             + " and 1.7 through 1.7.3",
+                           blank_line,
+                           "Of general interest:",
+                           fakeLink("Waldo, On System Design (enrichment)",
+                                    "readings/OnSystemDesign.pdf"),
+                           fakeLink("Parnas &amp; Clements, Rational"
+                                    + "Design Process (enrichment)",
+                                    "readings/fake-it.pdf"));
+
+     c.add_info(c.next_LEC(), // fakeLink("Process Memory(pptx)", 
+                              //       "lec_notes/05_process_memory/"
+                              //       + "Process_memory.pptx"),
+                           fakeLink("Process Memory(pdf)", 
+                                    "lec_notes/05_process_memory/"
+                                    + "Process_memory.pdf"),
+                           fakeLink("Compiling advice",
+                                    "lec_notes/05_compiling_c/advice"));
+
+     c.add_info(c.next_LEC(), fakeLink("Locality",
+                                    "lec_notes/06_locality/"),
+                           "Reminder:  Pair program",
+                           blank_line,
+                           // fakeLink("Cache review notes (PPTX)",
+                           //          "lec_notes/06_locality/caches.pptx"),
+                           fakeLink("Cache review notes (PDF)",
+                                    "lec_notes/06_locality/caches.pdf"),
+                           blank_line,
+                           "Read:",
+                           "Bryant and O'Hallaron: Ch 1 (skim), "
+                           + "1.6 &amp; 1.7 (read), "
+                           + "6.1 (skim); "
+                           + "6.2 &ndash; 6.5 (read)");
+     c.add_info(c.next_LEC(), 
+                           fakeLink("More caches",
+                                    "lec_notes/06_locality/index"
+                                    + "#cache_miss"),
+                           blank_line,
+                           fakeLink("A2Methods: Object-Oriented Programming",
+                                    "lec_notes/06_vtables/"),
+                           fakeLink("A2Methods example",
+                                    "lec_notes/06_locality/A2Methods.text"),
+                           blank_line,
+                           "Read:",
+                           "Bryant and O'Hallaron Chapter 6",
+                           fakeLink("Caches and XML parser performace",
+                                    "readings/XMLParserCachingStory"));
+
+
+     c.add_info(c.next_LEC(), 
+                           fakeLink("Machine arithmetic",
+                                    "lec_notes/07_arithmetic/"),
+                           blank_line,
+                           fakeLink("Twos complement notes (PDF)",
+                                    "lec_notes/07_arithmetic/TwosComplement.pdf"),
+                           // fakeLink("Twos complement notes (PPTX)",
+                           //          "lec_notes/07_arithmetic/TwosComplement.pptx"),
+                           fakeLink("Floating point notes (PDF)",
+                                    "lec_notes/07_arithmetic/FloatingPoint.pdf"),
+                           // fakeLink("Floating point notes (PPTX)",
+                           //          "lec_notes/07_arithmetic/FloatingPoint.pptx"),
+                           blank_line,
+                           // fakeLink("Inheritance, A2Methods and vtables",
+                           //           "lec_notes/06_vtables/"), 
+                           fakeLink("OOP in C", "lec_notes/06_oop_in_c/"),
+                     
+                           blank_line,
+                           "Read:  B&amp;O 2.2&ndash;2.4");
+     c.add_info("23Feb", // fakeLink("Big and Little Endianness (PPTX)",
+                         //            "lec_notes/07_arithmetic/BigLittleEndian.pptx"),
+                         fakeLink("Big and Little Endianness (PDF)",
+                                  "lec_notes/07_arithmetic/BigLittleEndian.pdf"),
+                         // fakeLink("Bit fields notes (PPTX)",
+                         //          "lec_notes/07_arithmetic/BitFields.pptx"),
+                         fakeLink("Bit fields notes (PDF)",
+                                  "lec_notes/07_arithmetic/BitFields.pdf"),
+                           blank_line,
+                           fakeLink("endian.c", 
+                                    "lec_notes/07_arithmetic/endian.c",
+                                    "code"),
+                           blank_line,
+                           "Read:  B&amp;O Start of Chapter 2 &ndash; 2.1");
+
+/*
+     c.add_info(c.next_LEC(), "Coding and debugging strategies for arith",
+                           blank_line, 
+		           fakeLink("Midterm preparation", "handouts/midterm"),
+                           blank_line, 
+                           "Locality performance",
+                           blank_line);
+*/
+     c.add_info(c.next_LEC(), 
+                           // fakeLink("Introduction to Machine/Assembler Language (PPTX)",
+                           //          "lec_notes/08_assembly/AssemblyIntro.pptx"),
+                           fakeLink("Introduction to Machine/Assembler Language (PDF)",
+                                    "lec_notes/08_assembly/AssemblyIntro.pdf"),
+                           fakeLink("Deeper into the machine",
+                                    "lec_notes/08_assembly/"),
+                           blank_line,
+                           "Read:",
+                           "B&amp;O new material in 3.1&ndash;3.7 "
+                           + "(NB: examples use wrong machine)",
+                           "B&amp;O 3.13 on AMD64",
+                           "B&amp;O review in 3.8&ndash;3.11",
+                           blank_line,
+                           fakeLink("COMP 40 AMD 64 Information Page",
+                                    "amd64"));
+     c.add_info(c.next_LEC(), // fakeLink("Assembly Continued: Control Flow and Function calls (PPTX)",
+                              //       "lec_notes/08_assembly/AssemblyContinued.pptx"),
+                           fakeLink("Assembly Continued: Control Flow and Function calls (PDF)",
+                                    "lec_notes/08_assembly/AssemblyContinued.pdf"),
+                           blank_line,
+                           fakeLink("Assembly Control Flow",
+                                    "lec_notes/08_assembly/#controlflow"),
+                           fakeLink("Assembler demos you can try",
+                                    "lec_notes/08_assembly/assembler_demos"),
+                           blank_line,
+                           "Cuture and history:",
+                           fakeLink("Royal precision drum computer",
+                                    "http://ed-thelen.org/comp-hist/"
+                                    + "lgp-30-man.html"),
+                           fakeLink("Real programmers use machine code",
+                                    "http://www.catb.org/jargon/html/"
+                                    + "story-of-mel.html"));
+
+     c.add_info(c.next_LEC(), // fakeLink("Machine/Assembler Language - Putting It All Together (PPTX)",
+                              //          "lec_notes/08_assembly/AssemblyWrapup.pptx"),
+                           fakeLink("Machine/Assembler Language:  "
+                                    + "Putting It All Together (PDF)",
+                                    "lec_notes/08_assembly/AssemblyWrapup.pdf"),
+                           blank_line, 
+                           fakeLink("Assembly: Procedure call/return",
+                                    "lec_notes/08_assembly/index#params"),
+                           fakeLink("Lowering, control flow",
+                                    "lec_notes/08_assembly/index#lower"),
+                           "Read:",
+                           fakeLink("AMD64 Reference",
+                                    "handouts/amd64.pdf"));
+
+     c.add_info(c.next_LEC(), fakeLink("Refactoring",
+                                    "lec_notes/10_refactoring/index"),
+                           blank_line,
+                           "Exercise:",
+                           fakeLink("Refactoring <code>newu</code>",
+                                    "lec_notes/10_refactoring/index.php#exercises"),
+                           fakeLink("print_bits.c",
+                                    "lec_notes/07_arithmetic/number_bits_inclass.c"),
+                           "Refactoring: sort routine demos",
+		           fakeLink("selection_sort",
+                                    "lec_notes/10_refactoring/"
+                                    + "selection_sort.c", 
+                                    "code"),
+                           fakeLink("text_gen.py", 
+                                    "lec_notes/10_refactoring/text_gen.py",
+                                    "code"),
+                           fakeLink("Bruce's <code>resizer</code> main",
+                                    "lec_notes/10_refactoring/"
+                                    + "bruce_resize_cover_main"),
+/*
+		           blank_line,
+		           fakeLink("Factored selection sort",
+                                    "lec_notes/10_refactoring/"
+                                    + "selection_sort_factored.c",
+                                    "code"),
+                           " with ", 
+                           fakeLink("Sort code shareable with other sorts",
+                                    "lec_notes/10_refactoring/sort_support.c"),
+*/
+                           blank_line,
+                           "Watch:",
+                           fakeLink("Refactoring example in Erlang",
+                                    "https://www.youtube.com/watch?v=CQyt9Vlkbis"));
+
+     c.add_info(c.next_LEC(), fakeLink("Midterm preparation", "handouts/midterm"));
+
+
+     c.add_info("27Mar", fakeLink("Introducing the Universal Machine (PPTX)",
+                                    "lec_notes/09_um/UM-intro.pptx"),
+                           fakeLink("Introducing the Universal Machine (PDF)",
+                                    "lec_notes/09_um/UM-intro.pdf"),
+                           blank_line,
+                           fakeLink("Implementing the Universal Machine (PPTX)",
+                                    "lec_notes/09_um/UM-day2.pptx"),
+                           fakeLink("Implementing the Universal Machine (PDF)",
+                                    "lec_notes/09_um/UM-day2.pdf"),
+                           blank_line,
+                           fakeLink("A Universal Machine",
+                                    "lec_notes/09_um/index"));
+
+
+     c.add_info(c.next_LEC(), fakeLink("UM Design and Documentation",
+                                    "lec_notes/09_um/index#design_doc"),
+                           fakeLink("Documentation of the UM",
+                                    "lec_notes/09_um/index#documentation"));
+
+     c.add_info(c.next_LEC(), fakeLink("Performance",
+                                    "lec_notes/11_performance/index"),
+                           fakeLink("Performance Introduction (PPTX)",
+                                    "lec_notes/11_performance/performance_intro.pptx"),
+                           fakeLink("Performance Introduction (PDF)",
+                                    "lec_notes/11_performance/performance_intro.pdf"),
+                           "Read: B&amp;O Ch. 5 (choose sections of interest)");
+
+     c.add_info(c.next_LEC(), fakeLink("Performance Analysis Tools (PPTX)",
+                                    "lec_notes/11_performance/performance_tools.pptx"),
+                           fakeLink("Performance Analysis Tools (PDF)",
+                                    "lec_notes/11_performance/performance_tools.pdf"),
+                           blank_line,
+                           fakeLink("Performance-tuning tips",
+                                    "handouts/performance-tips.html"),
+                           "Read: B&amp;O Ch. 5 (choose sections of interest)");
+
+     c.add_info(c.next_LEC(), fakeLink("Performance Tuning (PPTX)",
+                                    "lec_notes/11_performance/performance_tuning.pptx"),
+                           fakeLink("Performance Tuning (PDF)",
+                                    "lec_notes/11_performance/performance_tuning.pdf"),
+                           blank_line,
+                           fakeLink("Performance-tuning tips",
+                                    "handouts/performance-tips.html"),
+                           blank_line,
+                           fakeLink("Performance wrapup",
+                                    "lec_notes/11_performance/index"),
+                           blank_line,
+                           "Read: B&amp;O Ch. 5 parts (see HW 7)",
+                           blank_line,
+                           fakeLink("flexible_array_member.c", 
+                                    "lec_notes/11_performance/"
+                                    + "flexible_array_member.c",
+                                    "code"));
+     c.add_info(c.next_LEC(), fakeLink("The UM Macro Assembler", 
+                                    "lec_notes/12_um_macro_assembler/"),
+     blank_line,
+                           
+                           "B&amp;O 7.1 &ndash; 7.9, 7.13"
+);
+
+     c.add_info(c.next_LEC(), 
+                        
+                        
+makeLink("COMP40 creative writing corner!",
+                                    "creative.html")
+                        
+                           );
+
+     tech_wrapup = c.add_info(c.next_LEC(), "COMP 40 Technical Wrapup",
+                           blank_line,
+                           fakeLink("FYI:  simlines in Python", 
+                                    "lec_notes/13_wrapup/python_demo/simlines.py"),
+                           fakeLink("FYI:  simlines in Python (trickier)", 
+                                    "lec_notes/13_wrapup/python_demo/simlines_tricky.py"),
+                           fakeLink("FYI:  simlines in Ruby", 
+                                    "lec_notes/13_wrapup/python_demo/simlines.rb"));
+
+
+     c.add_info(c.next_LEC(), 
+                          fakeLink("COMP 40 Wrapup",
+                                    "lec_notes/13_wrapup"), 
+                          blank_line,
+                          makeLink("Team Graham T-shirts", "graham.png"),
+                          makeLink("Team Charlie T-shirts", "charlie.html"),
+                          blank_line,
+                          fakeLink("Final Exam Information",
+                                    "handouts/final"));
+   c.add_info("20Apr",
+                        fakeLink("uarray420.c", "uarray420.c")
+                        );
+
+   
+
+
+     /***********************************************************************/
+     /*                             Exams                                   */
+     /***********************************************************************/
+
+     /* NEEDSWORK: Midterm date */
+     /* NOTE: HW5 out date depends on "midterm" */
+
+     midterm = c.add_info("15Mar", blank_line,
+                           span_class("Midterm Exam (usual class period)", 
+                                      "due"),
+                           fakeLink("Midterm solutions", 
+                                    "solutions/midterm-2016f-solutions.pdf"));
+
+     /* Alt midterm exam date removed: 10/9/2016 */
+
+     /* Fall 2016 we are in H+ Block */
+     final_exam = c.add_info("10May",
+                  span_class("Final Exam 7 &ndash; 9PM<br> Pearson 104", 
+                             "due"), blank_line); 
+
+     /***********************************************************************/
+     /*                          Assignments                                */
+     /***********************************************************************/
+
+     /* HOMEWORK 1 */
+
+     hw1_out = c.add_info(introDay, blank_line, 
+                           fakeLink("Read:  Design documents", "handouts/design.pdf"),
+                           fakeLink("HW 1:  Files,  Pictures and Interfaces", 
+                                    "homework/filesnpix", "HW"));
+     c.add_info(c.bump_date(hw1_out, 6), blank_line,
+                           span_class("HW 1 design due"
+                                    + "<a name = 'hw1desdue'></a>", 
+                                    "due"),"<br>Design doc submissions received by 6PM will be graded first.<br>No token will be assessed for submission received by Midnight.");
+
+     hw1_in = c.add_info(c.bump_date(hw1_out, 10), 
+                           fakeLink("HW 1 due", 
+                                    "solutions/index.html#filesnpix_sols", "due"));
+
+/*
+     hw1_powerfail = c.add_info(c.bump_date(hw1_out, 10),
+                           fakeLink("HW 1 accepted for no tokens on Saturday and for one token on Sunday due to Friday Power failure.", 
+                                    "solutions/index.html#filesnpix_sols", "due"));
+   
+*/
+     /* HOMEWORK 2 */
+
+     hw2_out = c.add_info(hw1_in,
+                           fakeLink("HW 2:  III", 
+                                    "homework/iii", "HW"));
+     c.add_info(c.bump_date(hw2_out, 5), blank_line,
+                           span_class("HW 2 design and interfaces due", "due"),"<br>Design doc submissions received by 6PM will be graded first.<br>No token will be assessed for submission received by Midnight.");
+     hw2_in = c.add_info(c.bump_date(hw2_out, 11), 
+                           fakeLink("HW 2 due", 
+                                    "solutions/index.html#iii_sols", "due"));
+
+     /* HOMEWORK 3 */
+
+     hw3_out = c.add_info(hw2_in, blank_line,
+                          fakeLink("HW 3:  Locality", 
+                                   "homework/locality.pdf", "HW"));
+     c.add_info(c.bump_date(hw3_out, 7), span_class("HW 3 design due", "due"),"<br>Design doc submissions received by 6PM will be graded first.<br>No token will be assessed for submission received by Midnight.");
+     hw3_in = c.add_info(c.bump_date(hw3_out, 10), 
+                           fakeLink("HW 3 due", 
+                                    "solutions/index.html#locality_sols", 
+                                    "due"));
+     /* HOMEWORK 4 */
+
+     hw4_out = c.add_info(hw3_in, blank_line,
+                          fakeLink("HW 4:  Arith", "homework/arith.pdf", "HW"));
+     c.add_info(c.bump_date(hw4_out, 6), blank_line,
+                           span_class("HW 4 design due", "due"),"<br><strong>IMPORTANT: New Due Date!</strong><br>Design doc submissions received by 6PM will be graded first.<br>No token will be assessed for submission received by Midnight.");
+     hw4_in = c.add_info(c.bump_date(hw4_out, 14), blank_line,
+                           fakeLink("HW 4 due", 
+                                    "solutions/index.html#arith_sols", "due"));
+/* special for fall2016...skip days between HW4 due and arith challenge out.
+   Now Sat -> Monday */
+     hw4_challenge_out = c.add_info(c.bump_date(hw4_in, 3), blank_line,
+                           fakeLink("Arith Challenge out", 
+                                    "homework/arith-challenge-landingpage",
+                                    "HW"));
+     hw4_challenge_in = c.add_info(c.bump_date(hw4_challenge_out, 1), blank_line,
+                           fakeLink("Arith Challenge Due", "",
+                           "due"));
+     /* HOMEWORK 5 */
+
+/*****NEEDSWORK: should depend on midterm ****/
+
+     hw5_out = c.add_info(hw4_in, blank_line,
+                           fakeLink("HW 5:  Code out", 
+                                    "homework/code.pdf", "HW"),
+                           fakeLink("Using DDD Safely for HW 5",
+                                    "http://www.cs.tufts.edu/comp/40/homework/"
+                                    + "ddd-rules",
+                                    "HW")); 
+     hw5_in = c.add_info("31Mar", blank_line,
+                           span_class("HW 5 due (no solutions)", "due"));
+
+     /* HOMEWORK 6 */
+
+/* NOTE: HW 6 out before HW 5 due to allow for election day */
+
+     hw6_out = c.add_info(hw5_in, //blank_line,
+                           fakeLink("HW 6:  UM out", 
+                                    "homework/um.pdf", "HW"));
+     c.add_info(c.bump_date(hw6_out, 6), blank_line,
+                           span_class("HW 6 design due", "due"),"<br>Design doc submissions received by 6PM will be graded first.<br>No token will be assessed for submission received by Midnight.");
+     hw6_in = c.add_info(c.bump_date(hw6_out, 13), //blank_line,
+                           fakeLink("HW 6 due", 
+                           "solutions/index.html#um_sols",
+                           "due"));
+     /* HOMEWORK 7 */
+
+     hw7_out = c.add_info(hw6_in, blank_line,
+                           fakeLink("HW 7:  Profiling out", 
+                                    "homework/profile.pdf", "HW"));
+     hw7_in = c.add_info(c.bump_date(hw7_out, 11), //blank_line,
+                           span_class("HW 7 due (no solutions)", "due"));
+    hw9_out = c.add_info("24Apr", blank_line,
+                           makeLink("HW 9:  40sfor40 out", 
+                                    "40sfor40.pdf", "HW"));
+     hw9_in = c.add_info("10May", //blank_line,
+                           span_class("HW 9 due (no solutions)", "due"));
+     /* OLD HOMEWORK 8 */
+
+/*     old_hw8_out = c.add_info("01Dec", blank_line,
+                           fakeLink("HW 8:  Macro Assembler out", 
+                                    "homework/asm.pdf", "HW"),
+                           fakeLink("(HTML version)", 
+                                    "homework/asm.html", "HW")); */
+/*   The following link was for the old HW 8 Macro Assembler assignment
+     which has not been done since Fall 2014.
+
+     c.add_info("02Dec", blank_line,
+                           fakeLink("HW 8 due", 
+                           "solutions/index.html#asm_sols",
+                           "due")); 
+*/
+
+     /* NEW HOMEWORK 8 */
+
+     // new_hw8_out = c.add_info(hw7_in, blank_line,
+     //                       fakeLink("HW 8:  RPN calculator", 
+     //                                "homework/asmcoding.pdf", "HW"),
+     //                       fakeLink("(HTML version)", 
+     //                                "homework/asmcoding.html", "HW"));
+		 c.add_info(tech_wrapup,
+                           blank_line,
+                           fakeLink("HW: Year End Questions", 
+                                    "handouts/Year End HW.pdf", "HW")); 
+     // new_hw8_in = c.add_info(c.bump_date(new_hw8_out, 7), blank_line,
+     //                       fakeLink("HW 8 due (no solutions)", "", "due"));
+
+
+
+
+ 
+     /***********************************************************************/
+     /*                       Administrative                                */
+     /***********************************************************************/
+
+    add_admin(cal);
+  </script>
+
+</head>
+<body class="mainpage calendar">
+
+
+<div id = "pretopmatter">
+     <p>COMP 40 &#8212; Spring 2017</p>
+</div><div id = "topmatter">
+
+  <div id = "topcontent">
+<!--    <img style="height:140px" src="DSC_2261.jpg" alt="logo">
+
+
+  -->
+    <h1>Course Calendar</h1>
+  </div>
+</div>
+<!-- ANNOUNCEMENTS LIKE "SITE UNDER DEVELOPMENT" GO HERE -->
+<!-- Common course navigation menu bar  -->
+
+<div id = "menubar">
+<p>
+  <a class='menu_item' href='./.'>Home</a>  <span class='here'>Calendar</span>  <a class='menu_item' href='./reference/index'>Reference</a>  <a class='menu_item' href='./admin'>Admin</a>  <a class='menu_item' href='https://piazza.com/tufts/spring2017/comp40/home'>Piazza</a></p>
+</div>
+ 
+
+
+
+<!-- uncomment if there are announcements! -->
+<!--    <h3 id="announcements">Announcements</h3> -->
+
+  </div>
+
+  <p>
+  <script type = "text/javascript">
+    c.render();
+  </script>
+
+</div>
+<div id = "dogtag">
+   This page is not affiliated with the Tufts COMP40 course.
+   Last Modified 20 April 2017
+</div> <!-- dogtag -->
+
+<div id = "draw_screen">
+  <button type = "button" onclick = "toggle_visibility('screen');">
+    Blaze it!
+  </button>
+</div>
+<div id = "screen">
+</div>
+
+</body>
+</html>
